@@ -1,67 +1,69 @@
 import React from "react";
-import { View, StatusBar, Text, StyleSheet, Image, Dimensions, ScrollView, FlatList, SafeAreaView } from 'react-native';
+import { View, StatusBar, Text, StyleSheet, Image, Dimensions, ScrollView, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 import CustomStatusBar from "../component/CustomStatusBar";
 
 
 const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
+
 const chatList = [
     {
         id: 1,
-        image: require('../asset/chat.png'),
+        image: require('../asset/man1.png'),
         name: "Chat1",
         message: "Hello chat 1.."
     },
     {
         id: 2,
-        image: require('../asset/chat.png'),
+        image: require('../asset/man2.png'),
         name: "Chat2",
         message: "Hello chat 2.."
     },
     {
         id: 3,
-        image: require('../asset/chat.png'),
+        image: require('../asset/man3.png'),
         name: "Chat3",
         message: "Hello chat 3.."
     },
     {
         id: 4,
-        image: require('../asset/chat.png'),
+        image: require('../asset/woman.png'),
         name: "Chat4",
         message: "Hello chat 4.."
     },
     {
         id: 5,
-        image: require('../asset/chat.png'),
+        image: require('../asset/user.png'),
         name: "Chat5",
         message: "Hello chat 5.."
     },
     {
         id: 6,
-        image: require('../asset/chat.png'),
+        image: require('../asset/man1.png'),
         name: "Chat6",
         message: "Hello chat 6.."
     },
     {
         id: 7,
-        image: require('../asset/chat.png'),
+        image: require('../asset/man2.png'),
         name: "Chat7",
         message: "Hello chat 7.."
     },
     {
         id: 8,
-        image: require('../asset/chat.png'),
+        image: require('../asset/man3.png'),
         name: "Chat8",
         message: "Hello chat 8.."
     },
     {
         id: 9,
-        image: require('../asset/chat.png'),
+        image: require('../asset/woman.png'),
         name: "Chat9",
         message: "Hello chat 9.."
     },
     {
         id: 10,
-        image: require('../asset/chat.png'),
+        image: require('../asset/user.png'),
         name: "Chat10",
         message: "Hello chat 10.."
     },
@@ -79,6 +81,7 @@ export default function Chats() {
                 <Image source={require('../asset/more.png')} style={styles.imageStyle}/>
                 </View>
             </View>
+            <View style={{borderTopWidth: 0.2}}>
             <FlatList
             contentContainerStyle={{paddingBottom: 70}}
             data={chatList}
@@ -95,7 +98,11 @@ export default function Chats() {
             )}
             keyExtractor={item => item.id}
             />
+            </View>
             </ScrollView>
+            <TouchableOpacity style={styles.floatBtnStyle}>
+                <Image style={styles.floatBtnImageStyle} source={require('../asset/add_contact.png')}/>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -157,10 +164,26 @@ const styles = StyleSheet.create({
         width: 50, 
         borderRadius: 50, 
         borderWidth: 1, 
-        borderColor: "#808080", 
-        padding: 5, 
+        borderColor: "#808080",
         alignContent: 'center', 
         justifyContent: 'center', 
+        alignSelf: 'center'
+    },
+    floatBtnStyle: {
+        height: 60,
+        width: 60,
+        backgroundColor: "#24a110",
+        borderRadius: 15,
+        alignContent: 'center',
+        position: 'absolute',
+        justifyContent: 'center',
+        marginTop: windowHeight/1.3,
+        marginStart: windowWidth/1.3,
+        elevation: 10
+    },
+    floatBtnImageStyle: {
+        height: 40,
+        width: 40,
         alignSelf: 'center'
     }
 })
