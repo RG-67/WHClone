@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, useState } from "react";
 import { View, StatusBar, Text, StyleSheet, Image, Dimensions, ScrollView, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 import CustomStatusBar from "../component/CustomStatusBar";
 
@@ -70,17 +70,27 @@ const chatList = [
 ];
 
 export default function Chats() {
+    const [isVisibile, setIsVisible] = useState(false);
+    const toggleVisibility = () => {
+        setIsVisible(!isVisibile);
+    };
+
+
     return (
         <View>
             <ScrollView>
+            {/* Header View Start */}
             <View style={styles.headerStyle}>
                 <Text style={styles.textStyle}>WHClone</Text>
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', marginEnd: 10}}>
                 <Image source={require('../asset/camera.png')} style={styles.imageStyle}/>
                 <Image source={require('../asset/search.png')} style={styles.imageStyle}/>
+                <TouchableOpacity style={{alignSelf: 'center'}} onPress={toggleVisibility}>
                 <Image source={require('../asset/more.png')} style={styles.imageStyle}/>
+                </TouchableOpacity>
                 </View>
             </View>
+            {/* Header View End */}
             <View style={{borderTopWidth: 0.2}}>
             <FlatList
             contentContainerStyle={{paddingBottom: 70}}
@@ -100,10 +110,23 @@ export default function Chats() {
             />
             </View>
             </ScrollView>
+            {/* More View Start */}
+            {isVisibile && (    
+            <View style={styles.moreContainer}>
+                <Text style={styles.moreText}>New group</Text>
+                <Text style={styles.moreText}>New broadcast</Text>
+                <Text style={styles.moreText}>Linked devices</Text>
+                <Text style={styles.moreText}>Starred messages</Text>
+                <Text style={styles.moreText}>Payments</Text>
+                <Text style={styles.moreText}>Settings</Text>
+            </View>
+            )}
+            {/* More View End */}
             <TouchableOpacity style={styles.floatBtnStyle}>
                 <Image style={styles.floatBtnImageStyle} source={require('../asset/add_contact.png')}/>
             </TouchableOpacity>
         </View>
+        
     )
 }
 
@@ -185,5 +208,22 @@ const styles = StyleSheet.create({
         height: 40,
         width: 40,
         alignSelf: 'center'
+    },
+    moreContainer: {
+        backgroundColor: "#2e2e2e",
+        position: 'absolute',
+        top: 60,
+        borderColor: "#ff0000",
+        borderRadius: 10,
+        right: 0,
+        width: 180,
+        padding: 10,
+        height: 300
+    },
+    moreText: {
+        color: "#ffffff",
+        fontSize: 16,
+        fontWeight: 'normal',
+        flex: 1
     }
 })
