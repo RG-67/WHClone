@@ -10,23 +10,25 @@ import Chats from "./Chats";
 import Updates from "./Updates";
 import Communities from "./Communities";
 import Calls from "./Calls";
+import Camera from "./CameraView";
+import CameraView from "./CameraView";
 
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
-const TabNavigation = () => {
-  return (
-    <NavigationContainer>
-      <Tabs.Navigator>
-            <Tabs.Screen name="Chats" component={Chats}/>
-            <Tabs.Screen name="Updates" component={Updates}/>
-            <Tabs.Screen name="Communities" component={Communities}/>
-            <Tabs.Screen name="Calls" component={Calls}/>
-        </Tabs.Navigator>
-  </NavigationContainer>
-  )
-}
+// const TabNavigation = () => {
+//   return (
+//     <NavigationContainer>
+//       <Tabs.Navigator>
+//             <Tabs.Screen name="Chats" component={Chats}/>
+//             <Tabs.Screen name="Updates" component={Updates}/>
+//             <Tabs.Screen name="Communities" component={Communities}/>
+//             <Tabs.Screen name="Calls" component={Calls}/>
+//         </Tabs.Navigator>
+//   </NavigationContainer>
+//   )
+// }
 
 const App = () => {
   return (
@@ -34,6 +36,7 @@ const App = () => {
       <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen name="SplashScreen" component={SplashScreen} options={{headerShown: false}}/>
         <Stack.Screen name="Tab" component={Tab} options={{headerShown: false}}/>
+        <Stack.Screen name="CameraView" component={CameraView} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   )

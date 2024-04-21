@@ -1,6 +1,8 @@
 import React, { Component, useState } from "react";
-import { View, StatusBar, Text, StyleSheet, Image, Dimensions, ScrollView, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, StatusBar, Text, StyleSheet, Image, Dimensions, ScrollView, FlatList, SafeAreaView, TouchableOpacity, Button } from 'react-native';
 import CustomStatusBar from "../component/CustomStatusBar";
+import { useNavigation } from "@react-navigation/native";
+import CameraView from "./CameraView";
 
 
 const windowWidth = Dimensions.get('window').width
@@ -70,6 +72,10 @@ const chatList = [
 ];
 
 export default function Chats() {
+    const navigation = useNavigation();
+    const navigateCamera = () => {
+        navigation.navigate('CameraView')   
+    }
     const [isVisibile, setIsVisible] = useState(false);
     const toggleVisibility = () => {
         setIsVisible(!isVisibile);
@@ -83,7 +89,9 @@ export default function Chats() {
             <View style={styles.headerStyle}>
                 <Text style={styles.textStyle}>WHClone</Text>
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', marginEnd: 10}}>
+                <TouchableOpacity style={{alignSelf: 'center'}} onPress={navigateCamera}>
                 <Image source={require('../asset/camera.png')} style={styles.imageStyle}/>
+                </TouchableOpacity>
                 <Image source={require('../asset/search.png')} style={styles.imageStyle}/>
                 <TouchableOpacity style={{alignSelf: 'center'}} onPress={toggleVisibility}>
                 <Image source={require('../asset/more.png')} style={styles.imageStyle}/>
@@ -133,9 +141,6 @@ export default function Chats() {
 
 
 const styles = StyleSheet.create({
-    mainContainer: {
-
-    },
     headerStyle: {
         height: 60,
         width: "100%",
