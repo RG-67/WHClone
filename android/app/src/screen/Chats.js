@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { View, StatusBar, Text, StyleSheet, Image, Dimensions, ScrollView, FlatList, SafeAreaView, TouchableOpacity, Button } from 'react-native';
+import { View, StatusBar, Text, StyleSheet, Image, Dimensions, ScrollView, FlatList, SafeAreaView, TouchableOpacity, Button, TextInput } from 'react-native';
 import CustomStatusBar from "../component/CustomStatusBar";
 import { useNavigation } from "@react-navigation/native";
 import CameraView from "./CameraView";
@@ -71,15 +71,20 @@ const chatList = [
     },
 ];
 
+
 export default function Chats() {
     const navigation = useNavigation();
     const navigateCamera = () => {
         navigation.navigate('CameraView')   
     }
     const [isVisibile, setIsVisible] = useState(false);
+    const [isSearchVisibile, setSearchIsVisible] = useState(false);
     const toggleVisibility = () => {
         setIsVisible(!isVisibile);
     };
+    const searchVisibility = () => {
+        setSearchIsVisible(!isSearchVisibile);
+    }
 
 
     return (
@@ -92,13 +97,30 @@ export default function Chats() {
                 <TouchableOpacity style={{alignSelf: 'center'}} onPress={navigateCamera}>
                 <Image source={require('../asset/camera.png')} style={styles.imageStyle}/>
                 </TouchableOpacity>
+                <TouchableOpacity style={{alignSelf: 'center'}} onPress={searchVisibility}>
                 <Image source={require('../asset/search.png')} style={styles.imageStyle}/>
+                </TouchableOpacity>
                 <TouchableOpacity style={{alignSelf: 'center'}} onPress={toggleVisibility}>
                 <Image source={require('../asset/more.png')} style={styles.imageStyle}/>
                 </TouchableOpacity>
                 </View>
             </View>
             {/* Header View End */}
+
+            {/* Search View Start */}
+            {isSearchVisibile && (
+            <View style={styles.headerStyle}>
+                <TextInput
+                style={styles.searchBar}
+                placeholder="Search....."
+                autoCapitalize="none"
+                autoCorrect={false}
+                clearButtonMode="always"
+                />
+            </View>
+            )}
+            {/* Search View End */}
+
             <View style={{borderTopWidth: 0.2}}>
             <FlatList
             contentContainerStyle={{paddingBottom: 70}}
@@ -230,5 +252,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'normal',
         flex: 1
+    },
+    searchBar: {
+        backgroundColor: "#808080",
+        width: windowWidth,
+        color: "#ffffff",
+        fontSize: 15
     }
 })

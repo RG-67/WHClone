@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
-import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import { Button, Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import useCallBackRef from "../hooks/useCallBackRef";
 import CameraService from "../service/CameraService";
 import useCamera from "../hooks/useCamera";
-import { useCameraDevice, Camera } from "react-native-vision-camera";
+import { useCameraDevice, Camera} from "react-native-vision-camera";
 
 const cameraService = new CameraService();
 const windowWidth = Dimensions.get('window').width;
@@ -22,33 +22,35 @@ const CameraView = () => {
     
     return (
         <View style={styles.mainContainer}>
-        {/* <RNCamera
-        ratio={'16:9'}
-        ref={callbackRef}
-        type={cameraType}
-        style={styles.cameraContainer}
-        > */}
-            {/* <View style={styles.topViewContainer}> */}
-            {/* Header View Start */}
-            {/* <View style={styles.header}>
-                <Image style={styles.backBtnStyle} source={require('../asset/close.png')}/>
-                <Image style={styles.flashBtnStyle} source={require('../asset/flash.png')}/>
-            </View> */}
-            {/* Header View End */}
-            {/* Footer View Start */}
-            {/* <View style={styles.footer}>
-
-            </View> */}
-            {/* Footer View End */}
-            {/* </View> */}
-
-        {/* </RNCamera> */}
-        
+    
+        {/* Camera Container View Start */}
+        <View style={styles.cameraContainer}>
         <Camera
-        style={{height: 150, width: 150}}
+        style={styles.cameraStyle}
         device={device}
-        isActive={true}
-        />
+        isActive={true}>
+        </Camera>
+        <View style={styles.topViewContainer}>
+            <TouchableOpacity 
+            onPress={() => navigation.goBack()}>
+            <Image style={styles.backBtnStyle} source={require('../asset/close.png')}/>
+            </TouchableOpacity>
+            <Image style={styles.flashBtnStyle} source={require('../asset/flash.png')}/>
+        </View>
+
+        {/* Bootom Container View Start */}
+        <View style={styles.bottomViewContainer}>
+            <TouchableOpacity style={styles.bottomViewImageStyle}>
+            <Image style={{width: 20, height: 20, tintColor: "#ffffff"}} source={require('../asset/gallery.png')}/>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.captureBtn}/>
+            <TouchableOpacity style={styles.bottomViewImageStyle}>
+            <Image style={{width: 20, height: 20, tintColor: "#ffffff"}} source={require('../asset/reverse.png')}/>
+            </TouchableOpacity>
+        </View>
+        {/* Bootom Container View End */}
+        </View>
+        {/* Camera Container View End */}
 
         </View>
     )
@@ -59,20 +61,17 @@ export default CameraView;
 
 const styles = StyleSheet.create({
     mainContainer: {
-        // flex: 1,
-        // flexDirection: 'column',
-        // backgroundColor: "#000000"
-    },
-    cameraContainer: {
-        // flex: 1,
-        justifyContent: 'center',
-        height: 250,
-        width: windowWidth,
-        // backgroundColor: "#000000"
-    },
-    topViewContainer: {
         flex: 1,
         backgroundColor: "#000000"
+    },
+    cameraContainer: {
+        flex: 1
+    },
+    topViewContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: 20,
+        alignItems: 'center'
     },
     header: {
         flex: 1,
@@ -84,13 +83,46 @@ const styles = StyleSheet.create({
 
     },
     backBtnStyle: {
-        height: 20,
-        width: 20,
+        height: 16,
+        width: 16,
         tintColor: "#ffffff"
     },
     flashBtnStyle: {
-        height: 25,
-        width: 25,
+        height: 22,
+        width: 22,
         tintColor: "#ffffff"
+    },
+    cameraStyle: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        top: 0
+    },
+    bottomViewContainer: {
+        flexDirection: 'row',
+        bottom: 50,
+        top: windowHeight/1.4,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        margin: 20
+    },
+    btmComponentStyle: {
+
+    },
+    captureBtn: {
+        width: 50,
+        height: 50,
+        backgroundColor: "#ffffff",
+        borderRadius: 50,
+        
+    },
+    bottomViewImageStyle: {
+        width: 50, 
+        height: 50, 
+        borderRadius: 50, 
+        backgroundColor: "#1b1c1b", 
+        justifyContent: 'center', 
+        alignItems: 'center'
     }
 })
