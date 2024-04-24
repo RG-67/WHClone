@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { Button, Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import useCallBackRef from "../hooks/useCallBackRef";
@@ -18,6 +18,9 @@ const CameraView = () => {
     const {refRnce, callbackRef} = useCallBackRef();
     const {takePicture} = useCamera(refRnce);
     const device = useCameraDevice('back');
+
+    // const camera = useRef(null);
+    // const [imageRes, setImageRes] = useState('');
 
     
     return (

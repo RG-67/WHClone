@@ -74,6 +74,9 @@ const chatList = [
 
 export default function Chats() {
     const navigation = useNavigation();
+    const [chatData, chatSetData] = useState(chatList);
+    const [searchText, setSearchText] = useState('');
+
     const navigateCamera = () => {
         navigation.navigate('CameraView')   
     }
@@ -84,6 +87,17 @@ export default function Chats() {
     };
     const searchVisibility = () => {
         setSearchIsVisible(!isSearchVisibile);
+    }
+
+    const searchChat = (text) => {
+        setSearchText(text);
+        text = text.toLowerCase();
+        if (text === "") {
+            chatSetData(chatList);
+        } else {
+            let filteredChatList = chatList.filter(chat => (chat.name.toLowerCase().startsWith(text)));
+            chatSetData(filteredChatList);
+        }
     }
 
 
@@ -109,13 +123,15 @@ export default function Chats() {
 
             {/* Search View Start */}
             {isSearchVisibile && (
-            <View style={styles.headerStyle}>
+            <View style={{backgroundColor: "#000000", padding: 10}}>
                 <TextInput
                 style={styles.searchBar}
                 placeholder="Search....."
                 autoCapitalize="none"
                 autoCorrect={false}
                 clearButtonMode="always"
+                value={searchText}
+                onChangeText={text => searchChat(text)}
                 />
             </View>
             )}
@@ -124,7 +140,7 @@ export default function Chats() {
             <View style={{borderTopWidth: 0.2}}>
             <FlatList
             contentContainerStyle={{paddingBottom: 70}}
-            data={chatList}
+            data={chatData}
             renderItem={({item}) => (
                 <View style={styles.itemStyle}>
                     <View style={styles.itemImageBorderStyle}>
@@ -254,9 +270,14 @@ const styles = StyleSheet.create({
         flex: 1
     },
     searchBar: {
-        backgroundColor: "#808080",
-        width: windowWidth,
+        backgroundColor: "#2a2b2b",
+        width: windowWidth/1.1,
+        height: 50,
         color: "#ffffff",
-        fontSize: 15
+        fontSize: 15,
+        borderRadius: 20,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        paddingStart: 20
     }
 })
