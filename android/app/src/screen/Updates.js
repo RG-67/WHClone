@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text, StyleSheet, Dimensions, Image, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 
@@ -50,6 +51,9 @@ const ChannelItem = [
 ]
 
 export default function Updates() {
+
+    const navigation = useNavigation();
+
     return (
         <View style={{backgroundColor: "#000000", flex: 1, paddingBottom: 100}}>
 
@@ -57,7 +61,9 @@ export default function Updates() {
             <View style={styles.headerStyle}>
                 <Text style={styles.textStyle}>Updates</Text>
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', marginEnd: 10}}>
+                <TouchableOpacity style={{alignSelf: 'center'}} onPress={() => navigation.navigate('CameraView')}>
                 <Image source={require('../asset/camera.png')} style={styles.imageStyle}/>
+                </TouchableOpacity>
                 <Image source={require('../asset/search.png')} style={styles.imageStyle}/>
                 <Image source={require('../asset/more.png')} style={styles.imageStyle}/>
                 </View>
@@ -143,7 +149,7 @@ export default function Updates() {
             <TouchableOpacity style={styles.edtFloatBtnStyle}>
                 <Image style={styles.edtFloatBtnImageStyle} source={require('../asset/pencil.png')}/>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.floatBtnStyle}>
+            <TouchableOpacity style={styles.floatBtnStyle} onPress={() => navigation.navigate('CameraView')}>
                 <Image style={styles.floatBtnImageStyle} source={require('../asset/camera_btn.png')}/>
             </TouchableOpacity>
         </View>

@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useCallback, useRef, useState } from "react";
-import { Button, Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Alert, Button, Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import useCallBackRef from "../hooks/useCallBackRef";
 import CameraService from "../service/CameraService";
@@ -16,23 +16,45 @@ const CameraView = () => {
     const [flashType, setFlash] = useState(RNCamera.Constants.Type.flashType);
     const [cameraType, setCamera] = useState(RNCamera.Constants.Type.back);
     const {refRnce, callbackRef} = useCallBackRef();
+
     const {takePicture} = useCamera(refRnce);
     const device = useCameraDevice('back');
+    const camera = useRef(null);
+    const [showCamera, setShowCamera] = useState(false);
+    const [imageSrc, setImageSrc] = useState('');
 
-    // const camera = useRef(null);
-    // const [imageRes, setImageRes] = useState('');
+    useEffect(() => {
+        async function getCameraPermission() {
+            const camPermission = await Camera.requestCameraPermission();
+            console.log(camPermission);
+        }
+        getCameraPermission();
+    }, []);
 
+    const capturePhoto = async () => {
+        if (camera.current !== null) {
+            const photo = await camera.current.takePhoto({});
+            setImageSrc(photo.path);
+            setShowCamera(false);
+            console.log(photo.path);
+            Alert.alert(photo.path)
+        }
+    };
     
     return (
         <View style={styles.mainContainer}>
     
         {/* Camera Container View Start */}
         <View style={styles.cameraContainer}>
+        <>
         <Camera
+        ref={camera}
         style={styles.cameraStyle}
         device={device}
-        isActive={true}>
+        isActive={true}
+        photo={true}>
         </Camera>
+        </>
         <View style={styles.topViewContainer}>
             <TouchableOpacity 
             onPress={() => navigation.goBack()}>
@@ -46,7 +68,7 @@ const CameraView = () => {
             <TouchableOpacity style={styles.bottomViewImageStyle}>
             <Image style={{width: 20, height: 20, tintColor: "#ffffff"}} source={require('../asset/gallery.png')}/>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.captureBtn}/>
+            <TouchableOpacity style={styles.captureBtn} onPress={() => capturePhoto()}/>
             <TouchableOpacity style={styles.bottomViewImageStyle}>
             <Image style={{width: 20, height: 20, tintColor: "#ffffff"}} source={require('../asset/reverse.png')}/>
             </TouchableOpacity>
